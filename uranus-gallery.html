@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>اورانوس | گالری نمونه‌کارها</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#03080f;--sidebar:#061420;--card:#0a1e2e;
+  --accent:#29b8c8;--accent2:#1a8a97;
+  --text:#dff0f5;--muted:#6a9aad;--border:#0e2d42;--glow:rgba(41,184,200,.18);
+}
+html,body{height:100%;overflow:hidden;font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text)}
+.stars{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) infinite ease-in-out}
+@keyframes twinkle{0%,100%{opacity:.1}50%{opacity:var(--op,.8)}}
+.nebula{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 50% at 20% 80%,rgba(10,60,90,.45),transparent 65%),
+             radial-gradient(ellipse 50% 40% at 80% 20%,rgba(5,40,70,.35),transparent 60%)}
+.layout{position:relative;z-index:1;display:flex;height:100vh;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:268px;min-width:268px;background:linear-gradient(180deg,#061825,#04101a);
+  border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:-4px 0 30px rgba(0,0,0,.5)}
+.logo{display:flex;align-items:center;gap:10px;padding:20px 18px 16px;border-bottom:1px solid var(--border)}
+.logo-planet{width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  background:radial-gradient(circle at 35% 35%,#5dd6e8,#1a8090 45%,#0a3d4a);
+  box-shadow:0 0 18px rgba(41,184,200,.4),inset -4px -3px 8px rgba(0,0,0,.4)}
+.logo-text{font-size:1.5rem;font-weight:900;letter-spacing:2px;
+  background:linear-gradient(135deg,#fff 30%,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.search-wrap{padding:12px 14px 8px}
+.search{width:100%;background:rgba(41,184,200,.07);border:1px solid rgba(41,184,200,.2);
+  border-radius:10px;padding:8px 13px;color:var(--text);font-family:'Vazirmatn',sans-serif;
+  font-size:.84rem;outline:none;transition:.2s;text-align:right}
+.search::placeholder{color:var(--muted)}
+.search:focus{border-color:var(--accent);background:rgba(41,184,200,.12);box-shadow:0 0 0 3px var(--glow)}
+.filter-scroll{flex:1;overflow-y:auto;padding:2px 0 14px}
+.filter-scroll::-webkit-scrollbar{width:3px}
+.filter-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.filter-group{margin-bottom:4px;padding:0 10px}
+.filter-label{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:1.5px;padding:10px 4px 5px;display:block}
+.filter-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;
+  background:transparent;border:none;border-radius:8px;color:var(--text);cursor:pointer;
+  font-family:'Vazirmatn',sans-serif;font-size:.86rem;transition:.15s;text-align:right;justify-content:flex-end}
+.filter-btn:hover{background:rgba(41,184,200,.08);color:var(--accent)}
+.filter-btn.active{background:rgba(41,184,200,.15);color:var(--accent);font-weight:600}
+.filter-btn.active .dot{background:var(--accent);box-shadow:0 0 6px var(--accent)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;transition:.15s;order:1}
+.filter-divider{height:1px;background:var(--border);margin:5px 10px}
+
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{padding:16px 26px 12px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);background:rgba(3,8,15,.6);backdrop-filter:blur(10px)}
+.topbar-title{font-size:1rem;font-weight:700}
+.topbar-title span{color:var(--accent)}
+.result-count{font-size:.78rem;color:var(--muted)}
+.reset-btn{font-size:.76rem;color:var(--accent);background:none;border:1px solid rgba(41,184,200,.3);
+  border-radius:6px;padding:4px 11px;cursor:pointer;font-family:'Vazirmatn',sans-serif;transition:.15s}
+.reset-btn:hover{background:rgba(41,184,200,.1)}
+.grid-wrap{flex:1;overflow-y:auto;padding:22px 26px}
+.grid-wrap::-webkit-scrollbar{width:5px}
+.grid-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  cursor:pointer;transition:.2s;animation:fadeUp .3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card:hover{border-color:rgba(41,184,200,.4);transform:translateY(-4px);
+  box-shadow:0 8px 30px rgba(0,0,0,.4),0 0 18px var(--glow)}
+.card-thumb{height:138px;overflow:hidden;position:relative;background:#05111c;
+  display:flex;align-items:center;justify-content:center}
+.card-inner-phone{width:62px;height:108px;background:#111;border-radius:12px;
+  border:3px solid #222;box-shadow:0 0 12px rgba(41,184,200,.25);
+  display:flex;align-items:center;justify-content:center;font-size:1.6rem;
+  position:relative;overflow:hidden;flex-shrink:0}
+.card-bg-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(41,184,200,.12),transparent 70%)}
+.card-overlay{position:absolute;inset:0;background:rgba(3,8,15,.65);
+  display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s}
+.card:hover .card-overlay{opacity:1}
+.play-btn{width:42px;height:42px;border-radius:50%;background:rgba(41,184,200,.9);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  box-shadow:0 0 18px rgba(41,184,200,.5)}
+.card-body{padding:11px 13px 13px}
+.card-brand{font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.5px;margin-bottom:3px}
+.card-name{font-size:.88rem;font-weight:600;line-height:1.4;margin-bottom:9px}
+.card-tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}
+.tag{font-size:.65rem;padding:2px 7px;border-radius:20px;font-weight:500}
+.tag-media{background:rgba(41,184,200,.12);color:var(--accent);border:1px solid rgba(41,184,200,.2)}
+.no-result{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--muted)}
+.no-result .icon{font-size:3rem;margin-bottom:10px}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.25s}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal{background:linear-gradient(145deg,#07192a,#04101a);border:1px solid rgba(41,184,200,.25);
+  border-radius:20px;padding:26px 22px;max-width:440px;width:92%;
+  box-shadow:0 0 60px rgba(0,0,0,.7),0 0 40px var(--glow);
+  transform:scale(.9) translateY(20px);transition:.25s}
+.modal-bg.open .modal{transform:none}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;gap:12px}
+.modal-brand{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.5px;margin-bottom:3px}
+.modal-title{font-size:1.05rem;font-weight:700;line-height:1.4}
+.modal-close{background:rgba(255,255,255,.06);border:1px solid var(--border);
+  border-radius:8px;width:32px;height:32px;flex-shrink:0;cursor:pointer;color:var(--muted);
+  font-size:1rem;display:flex;align-items:center;justify-content:center;transition:.15s}
+.modal-close:hover{background:rgba(41,184,200,.15);color:var(--text)}
+.modal-desc{font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:18px;
+  background:rgba(255,255,255,.03);border-radius:8px;padding:10px 12px;border:1px solid var(--border)}
+
+/* PHONE MOCKUP */
+.phone-wrap{display:flex;justify-content:center;margin-bottom:18px}
+.phone{width:210px;height:410px;background:#080808;border-radius:34px;
+  border:5px solid #1a1a1a;box-shadow:0 0 0 1px #2a2a2a,0 20px 50px rgba(0,0,0,.6),0 0 35px var(--glow);
+  position:relative;overflow:hidden;display:flex;flex-direction:column}
+.phone-notch{height:24px;background:#080808;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;position:relative}
+.phone-notch::after{content:'';width:72px;height:13px;background:#111;border-radius:0 0 10px 10px;position:absolute;top:0}
+.phone-screen{flex:1;overflow:hidden;position:relative}
+.phone-screen iframe{width:100%;height:100%;border:none;display:block}
+.phone-loading{position:absolute;inset:0;background:#04111c;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;color:var(--muted);font-size:.78rem}
+.spinner{width:26px;height:26px;border:3px solid var(--border);border-top-color:var(--accent);
+  border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.modal-footer{display:flex;gap:10px;justify-content:center}
+.open-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;
+  border-radius:10px;padding:8px 18px;font-family:'Vazirmatn',sans-serif;font-size:.83rem;
+  font-weight:700;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:6px}
+.open-btn:hover{opacity:.85;transform:translateY(-1px)}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="nebula"></div>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-planet"></div>
+      <div class="logo-text">اورانوس</div>
+    </div>
+    <div class="search-wrap">
+      <input class="search" id="searchInput" type="text" placeholder="جستجو...">
+    </div>
+    <div class="filter-scroll">
+      <div class="filter-group" id="mediaGroup">
+        <span class="filter-label">نوع رسانه</span>
+      </div>
+      <div class="filter-divider"></div>
+      <div class="filter-group" id="brandGroup">
+        <span class="filter-label">برند</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">گالری <span>نمونه‌کارها</span></div>
+        <div class="result-count" id="resultCount">در حال بارگذاری...</div>
+      </div>
+      <button class="reset-btn" onclick="resetFilters()">پاک کردن فیلترها</button>
+    </div>
+    <div class="grid-wrap"><div class="grid" id="grid"></div></div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" onclick="bgClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-brand" id="mBrand"></div>
+        <div class="modal-title" id="mTitle"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-desc" id="mDesc"></div>
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-loading" id="phoneLoading"><div class="spinner"></div><span>در حال بارگذاری...</span></div>
+          <iframe id="previewFrame" onload="iframeLoaded()"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="open-btn" onclick="openInNew()">↗ مشاهده در صفحه جدید</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA (واقعی از API اورانوس) ──
+const items = [
+  {id:66,name:"یک ملاقات طلایی با بانک",brand:"داریک",mediaType:"interactive",key:"d5be022",desc:"داریک گلد، کمپین آگاهی از برند با شعار «یک ملاقات طلایی با بانک» در فضای دیجیتال."},
+  {id:67,name:"قیمت لحظه‌ای طلا",brand:"داریک",mediaType:"interactive",key:"6666",desc:""},
+  {id:10,name:"کولرگازی",brand:"جی‌پلاس",mediaType:"interactive",key:"6666",desc:"طراحی تعاملی برای کمپین آگاهی از محصول کولرگازی‌های جی پلاس."},
+  {id:85,name:"ما دو تا، شما همه",brand:"جی‌پلاس",mediaType:"banner",key:"bec8900",desc:""},
+  {id:9,name:"ری‌برندینگ",brand:"پاکشوما",mediaType:"motion",key:"6613164",desc:"طراحی خلاقانه برای معرفی هویت جدید پاکشوما."},
+  {id:8,name:"قرعه‌کشی ماشین آفرود",brand:"پاکشوما",mediaType:"interactive",key:"dc69e1c",desc:""},
+  {id:5,name:"رمزارز همستر",brand:"نوبیتکس",mediaType:"interactive",key:"4f3a21b",desc:""},
+  {id:12,name:"قرعه‌کشی کلور",brand:"کلور",mediaType:"interactive",key:"08f705a",desc:""},
+  {id:17,name:"کاغذ دیواریت رو انتخاب کن",brand:"اکستریم والز",mediaType:"interactive",key:"b0c6add",desc:""},
+  {id:124,name:"بلک فرایدی ۲۰۲۵",brand:"شهر لوازم خانگی",mediaType:"banner",key:"26A2",desc:""},
+  {id:38,name:"دوچرخه چیاوا",brand:"چیاوا",mediaType:"motion",key:"08f705a",desc:""},
+  {id:89,name:"کیدو",brand:"کاله",mediaType:"banner",key:"b0c6add",desc:""},
+  {id:50,name:"سس‌های فیل‌فیل",brand:"فیل‌فیل",mediaType:"interactive",key:"26A2",desc:"برند فیلفیل برای انتقال پیام پایه آواکادویی سس‌هایش."},
+  {id:51,name:"سرم ژنوبایوتیک",brand:"سریتا",mediaType:"banner",key:"1F81157",desc:"طراحی تعاملی برای کمپین سرم ژنوبایوتیک سریتا."},
+  {id:52,name:"یک سیف و سه نشان",brand:"سیف",mediaType:"interactive",key:"d5be022",desc:""},
+  {id:53,name:"کی ام سی T9",brand:"کرمان موتور",mediaType:"motion",key:"bec8900",desc:""},
+  {id:55,name:"روغن بالانسر",brand:"اویلا",mediaType:"banner",key:"6613164",desc:""},
+  {id:57,name:"از قیمت‌ها غول نساز",brand:"ازکی وام",mediaType:"interactive",key:"dc69e1c",desc:""},
+  {id:111,name:"بلک فرایدی ۲۰۲۵",brand:"اسنپ شاپ",mediaType:"banner",key:"4f3a21b",desc:""},
+  {id:119,name:"از جام تکون نمی‌خورم - آقا",brand:"اسنپ مارکت",mediaType:"motion",key:"1F81157",desc:""},
+  {id:120,name:"از جام تکون نمی‌خورم - خانم",brand:"اسنپ مارکت",mediaType:"motion",key:"d5be022",desc:""},
+  {id:121,name:"باران امید",brand:"بانک سپه",mediaType:"banner",key:"bec8900",desc:""},
+  {id:132,name:"لذت طعمی جدید",brand:"نسکافه",mediaType:"interactive",key:"6666",desc:""},
+  {id:139,name:"تیسان خودروی جدید تیگارد",brand:"تیگارد",mediaType:"motion",key:"6613164",desc:""},
+  {id:143,name:"سیزده نفر سیزده اتریوم",brand:"صراف",mediaType:"interactive",key:"08f705a",desc:""},
+  {id:15,name:"بهترین سوپرمارکت‌‌ها",brand:"اسنپ اکسپرس",mediaType:"banner",key:"26A2",desc:""},
+];
+
+const mediaLabel = {banner:"بنر HTML",motion:"موشن گرافیک",interactive:"تعاملی",video:"ویدیو"};
+const mediaEmoji = {banner:"🎨",motion:"🎬",interactive:"⚡",video:"📹"};
+
+let activeMedia = "all", activeBrand = "all", searchQ = "";
+let currentUrl = "";
+
+// stars
+(function(){
+  const c = document.getElementById("stars");
+  for(let i=0;i<130;i++){
+    const s=document.createElement("div"); s.className="star";
+    const sz=Math.random()*2+.5;
+    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*4+2).toFixed(1)}s;--op:${(Math.random()*.7+.3).toFixed(2)};animation-delay:${(Math.random()*5).toFixed(1)}s`;
+    c.appendChild(s);
+  }
+})();
+
+function makeBtn(label, filterKey, val, isActive){
+  const b = document.createElement("button");
+  b.className = "filter-btn" + (isActive ? " active" : "");
+  b.dataset.filter = filterKey; b.dataset.val = val;
+  b.innerHTML = `<span>${label}</span><div class="dot"></div>`;
+  return b;
+}
+
+function buildMediaFilter(){
+  const g = document.getElementById("mediaGroup");
+  g.innerHTML = `<span class="filter-label">نوع رسانه</span>`;
+  const types = ["all","banner","motion","interactive","video"];
+  const labels = {all:"همه",banner:"بنر HTML",motion:"موشن گرافیک",interactive:"تعاملی",video:"ویدیو"};
+  types.forEach(t => {
+    const b = makeBtn(labels[t], "media", t, activeMedia===t);
+    b.addEventListener("click", ()=>{ activeMedia=t; activeBrand="all"; buildMediaFilter(); buildBrandFilter(); render(); });
+    g.appendChild(b);
+  });
+}
+
+function buildBrandFilter(){
+  const g = document.getElementById("brandGroup");
+  g.innerHTML = `<span class="filter-label">برند</span>`;
+  const pool = activeMedia==="all" ? items : items.filter(i=>i.mediaType===activeMedia);
+  const brands = [...new Set(pool.map(i=>i.brand))].sort();
+  const allBtn = makeBtn("همه","brand","all", activeBrand==="all");
+  allBtn.addEventListener("click",()=>{ activeBrand="all"; buildBrandFilter(); render(); });
+  g.appendChild(allBtn);
+  brands.forEach(br => {
+    const b = makeBtn(br,"brand",br, activeBrand===br);
+    b.addEventListener("click",()=>{ activeBrand=br; buildBrandFilter(); render(); });
+    g.appendChild(b);
+  });
+  if(activeBrand!=="all" && !brands.includes(activeBrand)){ activeBrand="all"; buildBrandFilter(); }
+}
+
+function resetFilters(){
+  activeMedia="all"; activeBrand="all"; searchQ="";
+  document.getElementById("searchInput").value="";
+  buildMediaFilter(); buildBrandFilter(); render();
+}
+
+document.getElementById("searchInput").addEventListener("input", e=>{ searchQ=e.target.value.trim(); render(); });
+
+function render(){
+  const filtered = items.filter(it=>{
+    const mOk = activeMedia==="all" || it.mediaType===activeMedia;
+    const bOk = activeBrand==="all" || it.brand===activeBrand;
+    const sOk = !searchQ || it.name.includes(searchQ) || it.brand.includes(searchQ);
+    return mOk && bOk && sOk;
+  });
+  document.getElementById("resultCount").textContent = `نمایش ${filtered.length} نمونه`;
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  if(!filtered.length){
+    grid.innerHTML=`<div class="no-result"><div class="icon">🔭</div><p>نمونه‌ای یافت نشد</p></div>`;
+    return;
+  }
+  filtered.forEach((it,i)=>{
+    const d = document.createElement("div");
+    d.className="card"; d.style.animationDelay=`${i*0.04}s`;
+    d.innerHTML=`
+      <div class="card-thumb">
+        <div class="card-bg-glow"></div>
+        <div class="card-inner-phone">${mediaEmoji[it.mediaType]||"📱"}</div>
+        <div class="card-overlay"><div class="play-btn">▶</div></div>
+      </div>
+      <div class="card-body">
+        <div class="card-brand">${it.brand}</div>
+        <div class="card-name">${it.name}</div>
+        <div class="card-tags"><span class="tag tag-media">${mediaLabel[it.mediaType]||it.mediaType}</span></div>
+      </div>`;
+    d.addEventListener("click",()=>openModal(it));
+    grid.appendChild(d);
+  });
+}
+
+function openModal(it){
+  currentUrl = "https://uranus-agency.ir/demo?key=" + it.key;
+  document.getElementById("mBrand").textContent = it.brand;
+  document.getElementById("mTitle").textContent = it.name;
+  document.getElementById("mDesc").textContent = it.desc || "نمونه تبلیغ اجرا شده توسط اورانوس";
+  const frame = document.getElementById("previewFrame");
+  document.getElementById("phoneLoading").style.display="flex";
+  frame.style.display="none";
+  frame.src = currentUrl;
+  document.getElementById("modalBg").classList.add("open");
+}
+
+function iframeLoaded(){
+  document.getElementById("phoneLoading").style.display="none";
+  document.getElementById("previewFrame").style.display="block";
+}
+
+function bgClick(e){ if(e.target===document.getElementById("modalBg")) closeModal(); }
+function closeModal(){
+  document.getElementById("modalBg").classList.remove("open");
+  document.getElementById("previewFrame").src="";
+}
+function openInNew(){ window.open(currentUrl,"_blank"); }
+
+buildMediaFilter(); buildBrandFilter(); render();
+</script>
+</body>
+</html>
