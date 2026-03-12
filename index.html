@@ -12,8 +12,9 @@
   --accent:#29b8c8;--accent2:#1a8a97;
   --text:#dff0f5;--muted:#6a9aad;--border:#0e2d42;--glow:rgba(41,184,200,.18);
 }
-html,body{height:100%;font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text)}
-body{overflow-x:hidden}
+html{background:var(--bg)}
+body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
 .stars{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) infinite ease-in-out}
 @keyframes twinkle{0%,100%{opacity:.1}50%{opacity:var(--op,.8)}}
@@ -21,13 +22,13 @@ body{overflow-x:hidden}
   background:radial-gradient(ellipse 70% 50% at 20% 80%,rgba(10,60,90,.45),transparent 65%),
              radial-gradient(ellipse 50% 40% at 80% 20%,rgba(5,40,70,.35),transparent 60%)}
 
-/* ── LAYOUT ── */
-.layout{position:relative;z-index:1;display:flex;height:100vh;overflow:hidden}
+/* ══════════════════════════════
+   DESKTOP LAYOUT
+══════════════════════════════ */
+.desktop-layout{position:relative;z-index:1;display:flex;height:100vh;overflow:hidden}
 
-/* ── SIDEBAR ── */
 .sidebar{width:260px;min-width:260px;background:linear-gradient(180deg,#061825,#04101a);
-  border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;
-  transition:transform .3s ease;z-index:50}
+  border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
 .logo{display:flex;align-items:center;gap:10px;padding:18px 16px 14px;border-bottom:1px solid var(--border)}
 .logo-planet{width:38px;height:38px;border-radius:50%;flex-shrink:0;
   background:radial-gradient(circle at 35% 35%,#5dd6e8,#1a8090 45%,#0a3d4a);
@@ -46,47 +47,15 @@ body{overflow-x:hidden}
 .filter-group{margin-bottom:4px;padding:0 10px}
 .filter-label{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;
   letter-spacing:1.5px;padding:10px 4px 5px;display:block}
-.filter-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;
+.filter-btn{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;
   background:transparent;border:none;border-radius:8px;color:var(--text);cursor:pointer;
   font-family:'Vazirmatn',sans-serif;font-size:.84rem;transition:.15s;text-align:right;justify-content:flex-end}
-.filter-btn:hover{background:rgba(41,184,200,.08);color:var(--accent)}
-.filter-btn.active{background:rgba(41,184,200,.15);color:var(--accent);font-weight:600}
+.filter-btn:hover{background:rgba(41,184,200,.1);color:var(--accent)}
+.filter-btn.active{background:rgba(41,184,200,.18);color:var(--accent);font-weight:700}
 .filter-btn.active .dot{background:var(--accent);box-shadow:0 0 6px var(--accent)}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;transition:.15s;order:1}
 .filter-divider{height:1px;background:var(--border);margin:5px 10px}
 
-/* ── MOBILE HEADER ── */
-.mobile-header{display:none;align-items:center;justify-content:space-between;
-  padding:14px 16px;background:linear-gradient(180deg,#061825,#04101a);
-  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:40}
-.mobile-logo{display:flex;align-items:center;gap:8px}
-.mobile-logo .logo-planet{width:32px;height:32px}
-.mobile-logo .logo-text{font-size:1.2rem}
-.menu-btn{background:rgba(41,184,200,.1);border:1px solid rgba(41,184,200,.3);
-  border-radius:8px;padding:0 14px;height:38px;cursor:pointer;color:var(--accent);
-  font-size:.85rem;font-family:'Vazirmatn',sans-serif;font-weight:600;
-  display:flex;align-items:center;gap:6px;white-space:nowrap}
-
-/* ── DRAWER OVERLAY ── */
-.drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:45}
-.drawer-overlay.open{display:block}
-
-/* mobile sidebar as drawer */
-@media(max-width:768px){
-  .layout{flex-direction:column;height:auto;min-height:calc(100vh - 62px);overflow:visible}
-  .mobile-header{display:flex}
-  .sidebar{
-    position:fixed;top:0;right:-280px;height:100vh;
-    transition:right .3s ease;z-index:50;width:280px;
-    overflow-y:auto;
-  }
-  .sidebar.open{right:0}
-  .main{width:100%;height:auto;overflow:visible}
-  .grid-wrap{height:auto;overflow:visible;padding:16px}
-  .topbar{position:sticky;top:62px;z-index:30}
-}
-
-/* ── MAIN ── */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .topbar{padding:14px 22px 12px;display:flex;align-items:center;justify-content:space-between;
   border-bottom:1px solid var(--border);background:rgba(3,8,15,.8);backdrop-filter:blur(10px)}
@@ -94,52 +63,86 @@ body{overflow-x:hidden}
 .topbar-title span{color:var(--accent)}
 .result-count{font-size:.75rem;color:var(--muted)}
 .reset-btn{font-size:.74rem;color:var(--accent);background:none;border:1px solid rgba(41,184,200,.3);
-  border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'Vazirmatn',sans-serif;transition:.15s;white-space:nowrap}
+  border-radius:6px;padding:4px 10px;cursor:pointer;font-family:'Vazirmatn',sans-serif;white-space:nowrap}
 .reset-btn:hover{background:rgba(41,184,200,.1)}
 .grid-wrap{flex:1;overflow-y:auto;padding:20px 22px}
 .grid-wrap::-webkit-scrollbar{width:4px}
 .grid-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
 
-@media(max-width:480px){
-  .grid{grid-template-columns:repeat(2,1fr);gap:12px}
-  .grid-wrap{padding:12px}
-  .topbar{padding:10px 14px}
-}
+/* ══════════════════════════════
+   MOBILE LAYOUT (زیر 768px)
+══════════════════════════════ */
+.mobile-layout{display:none;position:relative;z-index:1;flex-direction:column;min-height:100vh}
 
-/* ── CARD ── */
+.mobile-header{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;background:#061825;border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:10}
+.mobile-logo{display:flex;align-items:center;gap:8px}
+.mobile-logo .lp{width:30px;height:30px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#5dd6e8,#1a8090 45%,#0a3d4a);
+  box-shadow:0 0 12px rgba(41,184,200,.4)}
+.mobile-logo .lt{font-size:1.1rem;font-weight:900;letter-spacing:2px;
+  background:linear-gradient(135deg,#fff 30%,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.filter-toggle{background:rgba(41,184,200,.12);border:1px solid rgba(41,184,200,.3);
+  border-radius:8px;padding:6px 14px;color:var(--accent);font-family:'Vazirmatn',sans-serif;
+  font-size:.82rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+
+/* filter panel */
+.mobile-filter-panel{background:#061825;border-bottom:2px solid var(--accent2);
+  overflow:hidden;max-height:0;transition:max-height .35s ease}
+.mobile-filter-panel.open{max-height:70vh;overflow-y:auto}
+.mobile-filter-inner{padding:12px 16px 20px}
+.mf-label{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:1.5px;padding:10px 0 6px;display:block}
+.mf-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.mf-chip{padding:6px 14px;border-radius:20px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);font-family:'Vazirmatn',sans-serif;
+  font-size:.8rem;cursor:pointer;transition:.15s}
+.mf-chip:active{transform:scale(.95)}
+.mf-chip.active{background:rgba(41,184,200,.18);border-color:var(--accent);color:var(--accent);font-weight:700}
+.mf-divider{height:1px;background:var(--border);margin:10px 0}
+.mobile-search{width:100%;background:rgba(41,184,200,.07);border:1px solid rgba(41,184,200,.2);
+  border-radius:10px;padding:8px 12px;color:var(--text);font-family:'Vazirmatn',sans-serif;
+  font-size:.84rem;outline:none;text-align:right;margin-bottom:12px}
+.mobile-search::placeholder{color:var(--muted)}
+
+.mobile-topbar{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);background:rgba(3,8,15,.8)}
+.mobile-grid-wrap{padding:12px;overflow-y:auto}
+.mobile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+
+/* ══════════════════════════════
+   CARDS
+══════════════════════════════ */
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;
   cursor:pointer;transition:.2s;animation:fadeUp .3s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.card:hover{border-color:rgba(41,184,200,.4);transform:translateY(-3px);
-  box-shadow:0 8px 28px rgba(0,0,0,.4),0 0 16px var(--glow)}
-.card:active{transform:scale(.97)}
-.card-thumb{height:130px;overflow:hidden;position:relative;background:#05111c;
-  display:flex;align-items:center;justify-content:center}
-.card-logo{width:56px;height:56px;border-radius:50%;background:rgba(41,184,200,.1);
-  border:2px solid rgba(41,184,200,.2);display:flex;align-items:center;justify-content:center;
-  font-size:.9rem;font-weight:800;color:var(--accent);letter-spacing:1px;overflow:hidden}
-.card-logo img{width:100%;height:100%;object-fit:contain;padding:8px;filter:brightness(1.2)}
+.card:hover{border-color:rgba(41,184,200,.4);transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.4),0 0 16px var(--glow)}
+.card:active{transform:scale(.96)}
+.card-thumb{height:120px;overflow:hidden;position:relative;background:#05111c;display:flex;align-items:center;justify-content:center}
+.card-logo{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;font-weight:800;letter-spacing:1px;overflow:hidden;border:2px solid}
 .card-bg-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,rgba(41,184,200,.1),transparent 70%)}
 .card-overlay{position:absolute;inset:0;background:rgba(3,8,15,.65);
   display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s}
 .card:hover .card-overlay,.card:active .card-overlay{opacity:1}
-.play-btn{width:40px;height:40px;border-radius:50%;background:rgba(41,184,200,.9);
-  display:flex;align-items:center;justify-content:center;font-size:.95rem;
-  box-shadow:0 0 16px rgba(41,184,200,.5)}
-.card-body{padding:10px 12px 12px}
-.card-brand{font-size:.68rem;font-weight:700;color:var(--accent);letter-spacing:.5px;margin-bottom:2px}
-.card-name{font-size:.84rem;font-weight:600;line-height:1.4;margin-bottom:8px}
+.play-btn{width:38px;height:38px;border-radius:50%;background:rgba(41,184,200,.9);
+  display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.card-body{padding:9px 11px 11px}
+.card-brand{font-size:.66rem;font-weight:700;color:var(--accent);letter-spacing:.5px;margin-bottom:2px}
+.card-name{font-size:.82rem;font-weight:600;line-height:1.4;margin-bottom:7px}
 .card-tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}
-.tag{font-size:.63rem;padding:2px 7px;border-radius:20px;font-weight:500}
-.tag-media{background:rgba(41,184,200,.12);color:var(--accent);border:1px solid rgba(41,184,200,.2)}
+.tag{font-size:.62rem;padding:2px 7px;border-radius:20px;font-weight:500;
+  background:rgba(41,184,200,.12);color:var(--accent);border:1px solid rgba(41,184,200,.2)}
 .no-result{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
 .no-result .icon{font-size:2.5rem;margin-bottom:10px}
 
-/* ── MODAL ── */
-.modal-bg{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.9);backdrop-filter:blur(10px);
-  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.25s;
-  padding:16px}
+/* ══════════════════════════════
+   MODAL
+══════════════════════════════ */
+.modal-bg{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.9);backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.25s;padding:16px}
 .modal-bg.open{opacity:1;pointer-events:all}
 .modal{background:linear-gradient(145deg,#07192a,#04101a);border:1px solid rgba(41,184,200,.25);
   border-radius:20px;padding:22px 20px;width:100%;max-width:420px;
@@ -150,19 +153,15 @@ body{overflow-x:hidden}
 .modal-brand{font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.5px;margin-bottom:2px}
 .modal-title{font-size:1rem;font-weight:700;line-height:1.4}
 .modal-close{background:rgba(255,255,255,.06);border:1px solid var(--border);
-  border-radius:8px;width:32px;height:32px;min-width:32px;flex-shrink:0;cursor:pointer;color:var(--muted);
-  font-size:1rem;display:flex;align-items:center;justify-content:center;transition:.15s}
-.modal-close:hover{background:rgba(41,184,200,.15);color:var(--text)}
+  border-radius:8px;width:32px;min-width:32px;height:32px;cursor:pointer;color:var(--muted);
+  font-size:1rem;display:flex;align-items:center;justify-content:center}
 .modal-desc{font-size:.78rem;color:var(--muted);line-height:1.7;margin-bottom:16px;
   background:rgba(255,255,255,.03);border-radius:8px;padding:9px 11px;border:1px solid var(--border)}
-
-/* ── PHONE MOCKUP ── */
 .phone-wrap{display:flex;justify-content:center;margin-bottom:16px}
 .phone{width:200px;height:390px;background:#080808;border-radius:32px;
   border:5px solid #1a1a1a;box-shadow:0 0 0 1px #2a2a2a,0 16px 40px rgba(0,0,0,.6),0 0 30px var(--glow);
-  position:relative;overflow:hidden;display:flex;flex-direction:column}
-.phone-notch{height:22px;background:#080808;display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;position:relative}
+  display:flex;flex-direction:column;overflow:hidden}
+.phone-notch{height:22px;background:#080808;flex-shrink:0;position:relative;display:flex;align-items:center;justify-content:center}
 .phone-notch::after{content:'';width:68px;height:12px;background:#111;border-radius:0 0 10px 10px;position:absolute;top:0}
 .phone-screen{flex:1;overflow:hidden;position:relative}
 .phone-screen iframe{width:100%;height:100%;border:none;display:block}
@@ -171,15 +170,15 @@ body{overflow-x:hidden}
 .spinner{width:24px;height:24px;border:3px solid var(--border);border-top-color:var(--accent);
   border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.modal-footer{display:flex;gap:10px;justify-content:center}
+.modal-footer{display:flex;justify-content:center}
 .open-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;
-  border-radius:10px;padding:8px 18px;font-family:'Vazirmatn',sans-serif;font-size:.82rem;
-  font-weight:700;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:6px}
-.open-btn:hover{opacity:.85}
+  border-radius:10px;padding:8px 20px;font-family:'Vazirmatn',sans-serif;font-size:.82rem;
+  font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px}
 
-@media(max-width:400px){
+@media(max-width:768px){
+  .desktop-layout{display:none}
+  .mobile-layout{display:flex}
   .phone{width:180px;height:350px}
-  .modal{padding:18px 14px}
 }
 </style>
 </head>
@@ -187,53 +186,65 @@ body{overflow-x:hidden}
 <div class="stars" id="stars"></div>
 <div class="nebula"></div>
 
-<!-- MOBILE HEADER -->
-<div class="mobile-header">
-  <div class="mobile-logo">
-    <div class="logo-planet"></div>
-    <div class="logo-text">اورانوس</div>
-  </div>
-  <button class="menu-btn" onclick="toggleDrawer()">☰ فیلتر</button>
-</div>
-
-<!-- DRAWER OVERLAY -->
-<div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
-
-<div class="layout">
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <div class="logo">
-      <div class="logo-planet"></div>
-      <div class="logo-text">اورانوس</div>
-    </div>
+<!-- ══ DESKTOP ══ -->
+<div class="desktop-layout">
+  <aside class="sidebar">
+    <div class="logo"><div class="logo-planet"></div><div class="logo-text">اورانوس</div></div>
     <div class="search-wrap">
-      <input class="search" id="searchInput" type="text" placeholder="جستجو...">
+      <input class="search" id="dSearchInput" type="text" placeholder="جستجو...">
     </div>
     <div class="filter-scroll">
-      <div class="filter-group" id="mediaGroup">
-        <span class="filter-label">نوع رسانه</span>
-      </div>
+      <div class="filter-group" id="dMediaGroup"><span class="filter-label">نوع رسانه</span></div>
       <div class="filter-divider"></div>
-      <div class="filter-group" id="brandGroup">
-        <span class="filter-label">برند</span>
-      </div>
+      <div class="filter-group" id="dBrandGroup"><span class="filter-label">برند</span></div>
     </div>
   </aside>
-
-  <!-- MAIN -->
   <main class="main">
     <div class="topbar">
       <div>
         <div class="topbar-title">گالری <span>نمونه‌کارها</span></div>
-        <div class="result-count" id="resultCount">در حال بارگذاری...</div>
+        <div class="result-count" id="dResultCount"></div>
       </div>
-      <button class="reset-btn" onclick="resetFilters()">پاک کردن فیلترها</button>
+      <button class="reset-btn" id="dResetBtn" onclick="resetAll()" style="display:none">پاک کردن فیلترها</button>
     </div>
-    <div class="grid-wrap"><div class="grid" id="grid"></div></div>
+    <div class="grid-wrap"><div class="grid" id="dGrid"></div></div>
   </main>
 </div>
 
-<!-- MODAL -->
+<!-- ══ MOBILE ══ -->
+<div class="mobile-layout">
+  <div class="mobile-header">
+    <div class="mobile-logo">
+      <div class="lp"></div>
+      <div class="lt">اورانوس</div>
+    </div>
+    <button class="filter-toggle" onclick="toggleMobileFilter()">
+      <span>🔽</span><span id="filterBtnLabel">فیلتر</span>
+    </button>
+  </div>
+
+  <div class="mobile-filter-panel" id="mFilterPanel">
+    <div class="mobile-filter-inner">
+      <input class="mobile-search" id="mSearchInput" type="text" placeholder="جستجو...">
+      <span class="mf-label">نوع رسانه</span>
+      <div class="mf-chips" id="mMediaChips"></div>
+      <div class="mf-divider"></div>
+      <span class="mf-label">برند</span>
+      <div class="mf-chips" id="mBrandChips"></div>
+    </div>
+  </div>
+
+  <div class="mobile-topbar">
+    <div class="topbar-title" style="font-size:.85rem">گالری <span style="color:var(--accent)">نمونه‌کارها</span></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="reset-btn" id="mResetBtn" onclick="resetAll()" style="display:none">پاک کردن فیلترها</button>
+      <div class="result-count" id="mResultCount" style="font-size:.72rem;color:var(--muted)"></div>
+    </div>
+  </div>
+  <div class="mobile-grid-wrap"><div class="mobile-grid" id="mGrid"></div></div>
+</div>
+
+<!-- ══ MODAL ══ -->
 <div class="modal-bg" id="modalBg" onclick="bgClick(event)">
   <div class="modal">
     <div class="modal-header">
@@ -248,7 +259,7 @@ body{overflow-x:hidden}
       <div class="phone">
         <div class="phone-notch"></div>
         <div class="phone-screen">
-          <div class="phone-loading" id="phoneLoading"><div class="spinner"></div><span>در حال بارگذاری...</span></div>
+          <div class="phone-loading" id="phoneLoading"><div class="spinner"></div><span>بارگذاری...</span></div>
           <iframe id="previewFrame" onload="iframeLoaded()"></iframe>
         </div>
       </div>
@@ -260,7 +271,7 @@ body{overflow-x:hidden}
 </div>
 
 <script>
-const items = [
+const items=[
   {id:66,name:"یک ملاقات طلایی با بانک",brand:"داریک",mediaType:"interactive",key:"d5be022",desc:"داریک گلد، کمپین آگاهی از برند با شعار «یک ملاقات طلایی با بانک» در فضای دیجیتال."},
   {id:67,name:"قیمت لحظه‌ای طلا",brand:"داریک",mediaType:"interactive",key:"6e86c29",desc:"نمایش قیمت لایو و لحظه‌ای طلا با قابلیت فیلتر زمانی روی نمودار."},
   {id:10,name:"کولرگازی",brand:"جی‌پلاس",mediaType:"interactive",key:"6666",desc:"طراحی تعاملی برای کمپین آگاهی از محصول کولرگازی‌های جی پلاس."},
@@ -290,16 +301,15 @@ const items = [
 ];
 
 const mediaLabel={banner:"بنر HTML",motion:"موشن گرافیک",interactive:"تعاملی",video:"ویدیو"};
-const brandColors={
-  "داریک":"#c8a84b","جی‌پلاس":"#e63946","پاکشوما":"#2a9d8f","نوبیتکس":"#f4a261",
+const brandColors={"داریک":"#c8a84b","جی‌پلاس":"#e63946","پاکشوما":"#2a9d8f","نوبیتکس":"#f4a261",
   "کلور":"#457b9d","اسنپ شاپ":"#6a0dad","اسنپ مارکت":"#2d6a4f","اسنپ اکسپرس":"#e9c46a",
-  "فیل‌فیل":"#e76f51","سریتا":"#a8dadc","کاله":"#f1faee","کرمان موتور":"#1d3557",
-  "تیگارد":"#264653","نسکافه":"#8b1a1a","صراف":"#b5838d","چیاوا":"#52b788",
-};
+  "فیل‌فیل":"#e76f51","سریتا":"#a8dadc","کاله":"#52b788","کرمان موتور":"#1d3557",
+  "تیگارد":"#264653","نسکافه":"#8b1a1a","صراف":"#b5838d","چیاوا":"#52b788"};
 
-let activeMedia="all",activeBrand="all",searchQ="",currentUrl="";
+let activeMedia="all", activeBrands=new Set(), searchQ="", currentUrl="";
+let mFilterOpen=false;
 
-// stars
+// ── STARS ──
 (function(){
   const c=document.getElementById("stars");
   for(let i=0;i<120;i++){
@@ -310,92 +320,163 @@ let activeMedia="all",activeBrand="all",searchQ="",currentUrl="";
   }
 })();
 
-// drawer
-function toggleDrawer(){
-  document.getElementById("sidebar").classList.toggle("open");
-  document.getElementById("drawerOverlay").classList.toggle("open");
+// ── MOBILE FILTER TOGGLE ──
+function toggleMobileFilter(){
+  mFilterOpen=!mFilterOpen;
+  const panel=document.getElementById("mFilterPanel");
+  const btn=document.getElementById("filterBtnLabel");
+  panel.classList.toggle("open",mFilterOpen);
+  btn.textContent=mFilterOpen?"بستن":"فیلتر";
+  document.querySelector(".filter-toggle span").textContent=mFilterOpen?"🔼":"🔽";
 }
 
-function makeBtn(label,filterKey,val,isActive){
-  const b=document.createElement("button");
-  b.className="filter-btn"+(isActive?" active":"");
-  b.dataset.filter=filterKey;b.dataset.val=val;
-  b.innerHTML=`<span>${label}</span><div class="dot"></div>`;
-  return b;
-}
-
-function buildMediaFilter(){
-  const g=document.getElementById("mediaGroup");
-  g.innerHTML=`<span class="filter-label">نوع رسانه</span>`;
-  const types=["all","banner","motion","interactive","video"];
-  const labels={all:"همه",banner:"بنر HTML",motion:"موشن گرافیک",interactive:"تعاملی",video:"ویدیو"};
-  types.forEach(t=>{
-    const b=makeBtn(labels[t],"media",t,activeMedia===t);
-    b.addEventListener("click",()=>{activeMedia=t;activeBrand="all";buildMediaFilter();buildBrandFilter();render();if(window.innerWidth<=768)toggleDrawer();});
-    g.appendChild(b);
-  });
-}
-
-function buildBrandFilter(){
-  const g=document.getElementById("brandGroup");
-  g.innerHTML=`<span class="filter-label">برند</span>`;
-  const pool=activeMedia==="all"?items:items.filter(i=>i.mediaType===activeMedia);
-  const brands=[...new Set(pool.map(i=>i.brand))].sort();
-  const allBtn=makeBtn("همه","brand","all",activeBrand==="all");
-  allBtn.addEventListener("click",()=>{activeBrand="all";buildBrandFilter();render();if(window.innerWidth<=768)toggleDrawer();});
-  g.appendChild(allBtn);
-  brands.forEach(br=>{
-    const b=makeBtn(br,"brand",br,activeBrand===br);
-    b.addEventListener("click",()=>{activeBrand=br;buildBrandFilter();render();if(window.innerWidth<=768)toggleDrawer();});
-    g.appendChild(b);
-  });
-  if(activeBrand!=="all"&&!brands.includes(activeBrand)){activeBrand="all";buildBrandFilter();}
-}
-
-function resetFilters(){
-  activeMedia="all";activeBrand="all";searchQ="";
-  document.getElementById("searchInput").value="";
-  buildMediaFilter();buildBrandFilter();render();
-}
-
-document.getElementById("searchInput").addEventListener("input",e=>{searchQ=e.target.value.trim();render();});
-
-function getInitials(name){return name.substring(0,2);}
-
-function render(){
-  const filtered=items.filter(it=>{
+// ── FILTER BUILDERS ──
+function filtered(){
+  return items.filter(it=>{
     const mOk=activeMedia==="all"||it.mediaType===activeMedia;
-    const bOk=activeBrand==="all"||it.brand===activeBrand;
+    const bOk=activeBrands.size===0||activeBrands.has(it.brand);
     const sOk=!searchQ||it.name.includes(searchQ)||it.brand.includes(searchQ);
     return mOk&&bOk&&sOk;
   });
-  document.getElementById("resultCount").textContent=`نمایش ${filtered.length} نمونه`;
-  const grid=document.getElementById("grid");
-  grid.innerHTML="";
-  if(!filtered.length){
-    grid.innerHTML=`<div class="no-result"><div class="icon">🔭</div><p>نمونه‌ای یافت نشد</p></div>`;
-    return;
-  }
-  filtered.forEach((it,i)=>{
-    const color=brandColors[it.brand]||"#29b8c8";
-    const d=document.createElement("div");
-    d.className="card";d.style.animationDelay=`${i*0.04}s`;
-    d.innerHTML=`
-      <div class="card-thumb">
-        <div class="card-bg-glow"></div>
-        <div class="card-logo" style="background:${color}22;border-color:${color}44;color:${color}">${getInitials(it.brand)}</div>
-        <div class="card-overlay"><div class="play-btn">▶</div></div>
-      </div>
-      <div class="card-body">
-        <div class="card-brand">${it.brand}</div>
-        <div class="card-name">${it.name}</div>
-        <div class="card-tags"><span class="tag tag-media">${mediaLabel[it.mediaType]||it.mediaType}</span></div>
-      </div>`;
-    d.addEventListener("click",()=>openModal(it));
-    grid.appendChild(d);
+}
+
+function buildDesktopFilters(){
+  buildDesktopMedia();
+  buildDesktopBrand();
+}
+
+function buildDesktopMedia(){
+  const g=document.getElementById("dMediaGroup");
+  g.innerHTML=`<span class="filter-label">نوع رسانه</span>`;
+  ["all","banner","motion","interactive","video"].forEach(t=>{
+    const labels={all:"همه",banner:"بنر HTML",motion:"موشن گرافیک",interactive:"تعاملی",video:"ویدیو"};
+    const b=document.createElement("button");
+    b.className="filter-btn"+(activeMedia===t?" active":"");
+    b.innerHTML=`<span>${labels[t]}</span><div class="dot"></div>`;
+    b.onclick=()=>{activeMedia=t;activeBrand="all";buildDesktopFilters();buildMobileFilters();renderAll();};
+    g.appendChild(b);
   });
 }
 
+function buildDesktopBrand(){
+  const g=document.getElementById("dBrandGroup");
+  g.innerHTML=`<span class="filter-label">برند <span style="color:var(--accent);font-size:.65rem">(چند انتخابی)</span></span>`;
+  const pool=activeMedia==="all"?items:items.filter(i=>i.mediaType===activeMedia);
+  const brands=[...new Set(pool.map(i=>i.brand))].sort();
+  // remove brands no longer in pool
+  activeBrands.forEach(b=>{ if(!brands.includes(b)) activeBrands.delete(b); });
+  // همه / پاک کردن
+  const allBtn=document.createElement("button");
+  allBtn.className="filter-btn"+(activeBrands.size===0?" active":"");
+  allBtn.innerHTML=`<span>همه</span><div class="dot"></div>`;
+  allBtn.onclick=()=>{activeBrands.clear();buildDesktopBrand();buildMobileBrand();renderAll();};
+  g.appendChild(allBtn);
+  brands.forEach(br=>{
+    const b=document.createElement("button");
+    b.className="filter-btn"+(activeBrands.has(br)?" active":"");
+    b.innerHTML=`<span>${br}</span><div class="dot"></div>`;
+    b.onclick=()=>{
+      if(activeBrands.has(br)) activeBrands.delete(br);
+      else activeBrands.add(br);
+      buildDesktopBrand();buildMobileBrand();renderAll();
+    };
+    g.appendChild(b);
+  });
+}
+
+function buildMobileFilters(){
+  buildMobileMedia();
+  buildMobileBrand();
+}
+
+function buildMobileMedia(){
+  const g=document.getElementById("mMediaChips");
+  g.innerHTML="";
+  const labels={all:"همه",banner:"بنر HTML",motion:"موشن گرافیک",interactive:"تعاملی",video:"ویدیو"};
+  ["all","banner","motion","interactive","video"].forEach(t=>{
+    const b=document.createElement("button");
+    b.className="mf-chip"+(activeMedia===t?" active":"");
+    b.textContent=labels[t];
+    b.onclick=()=>{activeMedia=t;activeBrand="all";buildDesktopFilters();buildMobileFilters();renderAll();};
+    g.appendChild(b);
+  });
+}
+
+function buildMobileBrand(){
+  const g=document.getElementById("mBrandChips");
+  g.innerHTML="";
+  const pool=activeMedia==="all"?items:items.filter(i=>i.mediaType===activeMedia);
+  const brands=[...new Set(pool.map(i=>i.brand))].sort();
+  activeBrands.forEach(b=>{ if(!brands.includes(b)) activeBrands.delete(b); });
+  // همه
+  const allBtn=document.createElement("button");
+  allBtn.className="mf-chip"+(activeBrands.size===0?" active":"");
+  allBtn.textContent="همه";
+  allBtn.onclick=()=>{activeBrands.clear();buildDesktopBrand();buildMobileBrand();renderAll();};
+  g.appendChild(allBtn);
+  brands.forEach(br=>{
+    const b=document.createElement("button");
+    b.className="mf-chip"+(activeBrands.has(br)?" active":"");
+    b.textContent=br;
+    b.onclick=()=>{
+      if(activeBrands.has(br)) activeBrands.delete(br);
+      else activeBrands.add(br);
+      buildDesktopBrand();buildMobileBrand();renderAll();
+    };
+    g.appendChild(b);
+  });
+}
+
+function resetAll(){
+  activeMedia="all";activeBrands.clear();searchQ="";
+  document.getElementById("dSearchInput").value="";
+  document.getElementById("mSearchInput").value="";
+  buildDesktopFilters();buildMobileFilters();renderAll();
+}
+
+document.getElementById("dSearchInput").addEventListener("input",e=>{searchQ=e.target.value.trim();renderAll();});
+document.getElementById("mSearchInput").addEventListener("input",e=>{searchQ=e.target.value.trim();renderAll();});
+
+// ── RENDER ──
+function makeCard(it,i){
+  const color=brandColors[it.brand]||"#29b8c8";
+  const d=document.createElement("div");
+  d.className="card";d.style.animationDelay=`${i*0.04}s`;
+  d.innerHTML=`
+    <div class="card-thumb">
+      <div class="card-bg-glow"></div>
+      <div class="card-logo" style="background:${color}22;border-color:${color}55;color:${color}">${it.brand.substring(0,2)}</div>
+      <div class="card-overlay"><div class="play-btn">▶</div></div>
+    </div>
+    <div class="card-body">
+      <div class="card-brand">${it.brand}</div>
+      <div class="card-name">${it.name}</div>
+      <div class="card-tags"><span class="tag">${mediaLabel[it.mediaType]||it.mediaType}</span></div>
+    </div>`;
+  d.onclick=()=>openModal(it);
+  return d;
+}
+
+function updateResetBtn(){
+  const hasFilter = activeMedia!=="all" || activeBrands.size>0 || searchQ!=="";
+  document.getElementById("dResetBtn").style.display = hasFilter ? "block" : "none";
+  document.getElementById("mResetBtn").style.display = hasFilter ? "block" : "none";
+}
+
+function renderAll(){
+  const f=filtered();
+  const noHtml=`<div class="no-result"><div class="icon">🔭</div><p>نمونه‌ای یافت نشد</p></div>`;
+  document.getElementById("dResultCount").textContent=`نمایش ${f.length} نمونه`;
+  document.getElementById("mResultCount").textContent=`${f.length} نمونه`;
+  updateResetBtn();
+  const dg=document.getElementById("dGrid");
+  const mg=document.getElementById("mGrid");
+  dg.innerHTML="";mg.innerHTML="";
+  if(!f.length){dg.innerHTML=noHtml;mg.innerHTML=noHtml;return;}
+  f.forEach((it,i)=>{dg.appendChild(makeCard(it,i));mg.appendChild(makeCard(it,i));});
+}
+
+// ── MODAL ──
 function openModal(it){
   currentUrl="https://uranus-agency.ir/demo?key="+it.key;
   document.getElementById("mBrand").textContent=it.brand;
@@ -408,12 +489,10 @@ function openModal(it){
   document.getElementById("modalBg").classList.add("open");
   document.body.style.overflow="hidden";
 }
-
 function iframeLoaded(){
   document.getElementById("phoneLoading").style.display="none";
   document.getElementById("previewFrame").style.display="block";
 }
-
 function bgClick(e){if(e.target===document.getElementById("modalBg"))closeModal();}
 function closeModal(){
   document.getElementById("modalBg").classList.remove("open");
@@ -422,7 +501,10 @@ function closeModal(){
 }
 function openInNew(){window.open(currentUrl,"_blank");}
 
-buildMediaFilter();buildBrandFilter();render();
+// ── INIT ──
+buildDesktopFilters();
+buildMobileFilters();
+renderAll();
 </script>
 </body>
 </html>
