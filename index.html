@@ -16,17 +16,16 @@ html{background:var(--bg)}
 body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
 .stars{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) infinite ease-in-out}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) infinite ease-in-out;transition:opacity .4s}
 @keyframes twinkle{0%,100%{opacity:.1}50%{opacity:var(--op,.8)}}
+/* وقتی مودال بازه ستاره‌ها درخشان‌تر */
+body.modal-open .star{animation-duration:calc(var(--d) * .5);filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px var(--accent))}
+body.modal-open .nebula{opacity:2}
 .nebula{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(ellipse 70% 50% at 20% 80%,rgba(10,60,90,.45),transparent 65%),
              radial-gradient(ellipse 50% 40% at 80% 20%,rgba(5,40,70,.35),transparent 60%)}
 
-/* ══════════════════════════════
-   DESKTOP LAYOUT
-══════════════════════════════ */
 .desktop-layout{position:relative;z-index:1;display:flex;height:100vh;overflow:hidden}
-
 .sidebar{width:260px;min-width:260px;background:linear-gradient(180deg,#061825,#04101a);
   border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
 .logo{display:flex;align-items:center;gap:10px;padding:18px 16px 14px;border-bottom:1px solid var(--border)}
@@ -55,7 +54,6 @@ body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);m
 .filter-btn.active .dot{background:var(--accent);box-shadow:0 0 6px var(--accent)}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;transition:.15s;order:1}
 .filter-divider{height:1px;background:var(--border);margin:5px 10px}
-
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .topbar{padding:14px 22px 12px;display:flex;align-items:center;justify-content:space-between;
   border-bottom:1px solid var(--border);background:rgba(3,8,15,.8);backdrop-filter:blur(10px)}
@@ -70,11 +68,7 @@ body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);m
 .grid-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
 
-/* ══════════════════════════════
-   MOBILE LAYOUT (زیر 768px)
-══════════════════════════════ */
 .mobile-layout{display:none;position:relative;z-index:1;flex-direction:column;min-height:100vh}
-
 .mobile-header{display:flex;align-items:center;justify-content:space-between;
   padding:12px 16px;background:#061825;border-bottom:1px solid var(--border);
   position:sticky;top:0;z-index:10}
@@ -87,8 +81,6 @@ body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);m
 .filter-toggle{background:rgba(41,184,200,.12);border:1px solid rgba(41,184,200,.3);
   border-radius:8px;padding:6px 14px;color:var(--accent);font-family:'Vazirmatn',sans-serif;
   font-size:.82rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
-
-/* filter panel */
 .mobile-filter-panel{background:#061825;border-bottom:2px solid var(--accent2);
   overflow:hidden;max-height:0;transition:max-height .35s ease}
 .mobile-filter-panel.open{max-height:70vh;overflow-y:auto}
@@ -106,15 +98,11 @@ body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);m
   border-radius:10px;padding:8px 12px;color:var(--text);font-family:'Vazirmatn',sans-serif;
   font-size:.84rem;outline:none;text-align:right;margin-bottom:12px}
 .mobile-search::placeholder{color:var(--muted)}
-
 .mobile-topbar{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;
   border-bottom:1px solid var(--border);background:rgba(3,8,15,.8)}
 .mobile-grid-wrap{padding:12px;overflow-y:auto}
 .mobile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 
-/* ══════════════════════════════
-   CARDS
-══════════════════════════════ */
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;
   cursor:pointer;transition:.2s;animation:fadeUp .3s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -138,16 +126,33 @@ body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);m
 .no-result{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
 .no-result .icon{font-size:2.5rem;margin-bottom:10px}
 
-/* ══════════════════════════════
-   MODAL
-══════════════════════════════ */
-.modal-bg{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.9);backdrop-filter:blur(10px);
-  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.25s;padding:16px}
+/* ══ MODAL - ستاره‌ها از پشت دیده میشن ══ */
+.modal-bg{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(3,8,15,.55);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:.25s;padding:16px
+}
 .modal-bg.open{opacity:1;pointer-events:all}
-.modal{background:linear-gradient(145deg,#07192a,#04101a);border:1px solid rgba(41,184,200,.25);
+
+/* یه لایه nebula روی مودال که ستاره‌ها رو کمرنگ نکنه */
+.modal-bg::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 85%,rgba(10,50,80,.5),transparent 60%),
+    radial-gradient(ellipse 45% 40% at 85% 15%,rgba(5,35,60,.4),transparent 55%);
+  pointer-events:none;
+}
+
+.modal{
+  background:linear-gradient(145deg,rgba(7,25,42,.92),rgba(4,16,26,.95));
+  border:1px solid rgba(41,184,200,.3);
   border-radius:20px;padding:22px 20px;width:100%;max-width:420px;
-  box-shadow:0 0 60px rgba(0,0,0,.7),0 0 40px var(--glow);
-  transform:scale(.9) translateY(20px);transition:.25s;max-height:90vh;overflow-y:auto}
+  box-shadow:0 0 60px rgba(0,0,0,.5),0 0 40px var(--glow),inset 0 1px 0 rgba(41,184,200,.1);
+  transform:scale(.9) translateY(20px);transition:.25s;
+  max-height:90vh;overflow-y:auto;
+  position:relative;z-index:1; /* روی لایه nebula */
+}
 .modal-bg.open .modal{transform:none}
 .modal-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:12px}
 .modal-brand{font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.5px;margin-bottom:2px}
@@ -186,7 +191,6 @@ body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);m
 <div class="stars" id="stars"></div>
 <div class="nebula"></div>
 
-<!-- ══ DESKTOP ══ -->
 <div class="desktop-layout">
   <aside class="sidebar">
     <div class="logo"><div class="logo-planet"></div><div class="logo-text">اورانوس</div></div>
@@ -211,7 +215,6 @@ body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);m
   </main>
 </div>
 
-<!-- ══ MOBILE ══ -->
 <div class="mobile-layout">
   <div class="mobile-header">
     <div class="mobile-logo">
@@ -222,7 +225,6 @@ body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);m
       <span>🔽</span><span id="filterBtnLabel">فیلتر</span>
     </button>
   </div>
-
   <div class="mobile-filter-panel" id="mFilterPanel">
     <div class="mobile-filter-inner">
       <input class="mobile-search" id="mSearchInput" type="text" placeholder="جستجو...">
@@ -233,7 +235,6 @@ body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);m
       <div class="mf-chips" id="mBrandChips"></div>
     </div>
   </div>
-
   <div class="mobile-topbar">
     <div class="topbar-title" style="font-size:.85rem">گالری <span style="color:var(--accent)">نمونه‌کارها</span></div>
     <div style="display:flex;align-items:center;gap:8px">
@@ -244,7 +245,6 @@ body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);m
   <div class="mobile-grid-wrap"><div class="mobile-grid" id="mGrid"></div></div>
 </div>
 
-<!-- ══ MODAL ══ -->
 <div class="modal-bg" id="modalBg" onclick="bgClick(event)">
   <div class="modal">
     <div class="modal-header">
@@ -306,21 +306,19 @@ const brandColors={"داریک":"#c8a84b","جی‌پلاس":"#e63946","پاکش�
   "فیل‌فیل":"#e76f51","سریتا":"#a8dadc","کاله":"#52b788","کرمان موتور":"#1d3557",
   "تیگارد":"#264653","نسکافه":"#8b1a1a","صراف":"#b5838d","چیاوا":"#52b788"};
 
-let activeMedia="all", activeBrands=new Set(), searchQ="", currentUrl="";
+let activeMedia="all",activeBrands=new Set(),searchQ="",currentUrl="";
 let mFilterOpen=false;
 
-// ── STARS ──
 (function(){
   const c=document.getElementById("stars");
-  for(let i=0;i<120;i++){
+  for(let i=0;i<220;i++){
     const s=document.createElement("div");s.className="star";
-    const sz=Math.random()*2+.5;
-    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*4+2).toFixed(1)}s;--op:${(Math.random()*.7+.3).toFixed(2)};animation-delay:${(Math.random()*5).toFixed(1)}s`;
+    const sz=Math.random()*3+.5;
+    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*4+2).toFixed(1)}s;--op:${(Math.random()*.6+.4).toFixed(2)};animation-delay:${(Math.random()*5).toFixed(1)}s`;
     c.appendChild(s);
   }
 })();
 
-// ── MOBILE FILTER TOGGLE ──
 function toggleMobileFilter(){
   mFilterOpen=!mFilterOpen;
   const panel=document.getElementById("mFilterPanel");
@@ -330,7 +328,6 @@ function toggleMobileFilter(){
   document.querySelector(".filter-toggle span").textContent=mFilterOpen?"🔼":"🔽";
 }
 
-// ── FILTER BUILDERS ──
 function filtered(){
   return items.filter(it=>{
     const mOk=activeMedia==="all"||it.mediaType===activeMedia;
@@ -340,11 +337,7 @@ function filtered(){
   });
 }
 
-function buildDesktopFilters(){
-  buildDesktopMedia();
-  buildDesktopBrand();
-}
-
+function buildDesktopFilters(){buildDesktopMedia();buildDesktopBrand();}
 function buildDesktopMedia(){
   const g=document.getElementById("dMediaGroup");
   g.innerHTML=`<span class="filter-label">نوع رسانه</span>`;
@@ -353,19 +346,16 @@ function buildDesktopMedia(){
     const b=document.createElement("button");
     b.className="filter-btn"+(activeMedia===t?" active":"");
     b.innerHTML=`<span>${labels[t]}</span><div class="dot"></div>`;
-    b.onclick=()=>{activeMedia=t;activeBrand="all";buildDesktopFilters();buildMobileFilters();renderAll();};
+    b.onclick=()=>{activeMedia=t;buildDesktopFilters();buildMobileFilters();renderAll();};
     g.appendChild(b);
   });
 }
-
 function buildDesktopBrand(){
   const g=document.getElementById("dBrandGroup");
   g.innerHTML=`<span class="filter-label">برند <span style="color:var(--accent);font-size:.65rem">(چند انتخابی)</span></span>`;
   const pool=activeMedia==="all"?items:items.filter(i=>i.mediaType===activeMedia);
   const brands=[...new Set(pool.map(i=>i.brand))].sort();
-  // remove brands no longer in pool
-  activeBrands.forEach(b=>{ if(!brands.includes(b)) activeBrands.delete(b); });
-  // همه / پاک کردن
+  activeBrands.forEach(b=>{if(!brands.includes(b))activeBrands.delete(b);});
   const allBtn=document.createElement("button");
   allBtn.className="filter-btn"+(activeBrands.size===0?" active":"");
   allBtn.innerHTML=`<span>همه</span><div class="dot"></div>`;
@@ -376,39 +366,29 @@ function buildDesktopBrand(){
     b.className="filter-btn"+(activeBrands.has(br)?" active":"");
     b.innerHTML=`<span>${br}</span><div class="dot"></div>`;
     b.onclick=()=>{
-      if(activeBrands.has(br)) activeBrands.delete(br);
-      else activeBrands.add(br);
+      if(activeBrands.has(br))activeBrands.delete(br);else activeBrands.add(br);
       buildDesktopBrand();buildMobileBrand();renderAll();
     };
     g.appendChild(b);
   });
 }
-
-function buildMobileFilters(){
-  buildMobileMedia();
-  buildMobileBrand();
-}
-
+function buildMobileFilters(){buildMobileMedia();buildMobileBrand();}
 function buildMobileMedia(){
-  const g=document.getElementById("mMediaChips");
-  g.innerHTML="";
+  const g=document.getElementById("mMediaChips");g.innerHTML="";
   const labels={all:"همه",banner:"بنر HTML",motion:"موشن گرافیک",interactive:"تعاملی",video:"ویدیو"};
   ["all","banner","motion","interactive","video"].forEach(t=>{
     const b=document.createElement("button");
     b.className="mf-chip"+(activeMedia===t?" active":"");
     b.textContent=labels[t];
-    b.onclick=()=>{activeMedia=t;activeBrand="all";buildDesktopFilters();buildMobileFilters();renderAll();};
+    b.onclick=()=>{activeMedia=t;buildDesktopFilters();buildMobileFilters();renderAll();};
     g.appendChild(b);
   });
 }
-
 function buildMobileBrand(){
-  const g=document.getElementById("mBrandChips");
-  g.innerHTML="";
+  const g=document.getElementById("mBrandChips");g.innerHTML="";
   const pool=activeMedia==="all"?items:items.filter(i=>i.mediaType===activeMedia);
   const brands=[...new Set(pool.map(i=>i.brand))].sort();
-  activeBrands.forEach(b=>{ if(!brands.includes(b)) activeBrands.delete(b); });
-  // همه
+  activeBrands.forEach(b=>{if(!brands.includes(b))activeBrands.delete(b);});
   const allBtn=document.createElement("button");
   allBtn.className="mf-chip"+(activeBrands.size===0?" active":"");
   allBtn.textContent="همه";
@@ -419,25 +399,21 @@ function buildMobileBrand(){
     b.className="mf-chip"+(activeBrands.has(br)?" active":"");
     b.textContent=br;
     b.onclick=()=>{
-      if(activeBrands.has(br)) activeBrands.delete(br);
-      else activeBrands.add(br);
+      if(activeBrands.has(br))activeBrands.delete(br);else activeBrands.add(br);
       buildDesktopBrand();buildMobileBrand();renderAll();
     };
     g.appendChild(b);
   });
 }
-
 function resetAll(){
   activeMedia="all";activeBrands.clear();searchQ="";
   document.getElementById("dSearchInput").value="";
   document.getElementById("mSearchInput").value="";
   buildDesktopFilters();buildMobileFilters();renderAll();
 }
-
 document.getElementById("dSearchInput").addEventListener("input",e=>{searchQ=e.target.value.trim();renderAll();});
 document.getElementById("mSearchInput").addEventListener("input",e=>{searchQ=e.target.value.trim();renderAll();});
 
-// ── RENDER ──
 function makeCard(it,i){
   const color=brandColors[it.brand]||"#29b8c8";
   const d=document.createElement("div");
@@ -456,27 +432,23 @@ function makeCard(it,i){
   d.onclick=()=>openModal(it);
   return d;
 }
-
 function updateResetBtn(){
-  const hasFilter = activeMedia!=="all" || activeBrands.size>0 || searchQ!=="";
-  document.getElementById("dResetBtn").style.display = hasFilter ? "block" : "none";
-  document.getElementById("mResetBtn").style.display = hasFilter ? "block" : "none";
+  const h=activeMedia!=="all"||activeBrands.size>0||searchQ!=="";
+  document.getElementById("dResetBtn").style.display=h?"block":"none";
+  document.getElementById("mResetBtn").style.display=h?"block":"none";
 }
-
 function renderAll(){
   const f=filtered();
   const noHtml=`<div class="no-result"><div class="icon">🔭</div><p>نمونه‌ای یافت نشد</p></div>`;
   document.getElementById("dResultCount").textContent=`نمایش ${f.length} نمونه`;
   document.getElementById("mResultCount").textContent=`${f.length} نمونه`;
   updateResetBtn();
-  const dg=document.getElementById("dGrid");
-  const mg=document.getElementById("mGrid");
+  const dg=document.getElementById("dGrid"),mg=document.getElementById("mGrid");
   dg.innerHTML="";mg.innerHTML="";
   if(!f.length){dg.innerHTML=noHtml;mg.innerHTML=noHtml;return;}
   f.forEach((it,i)=>{dg.appendChild(makeCard(it,i));mg.appendChild(makeCard(it,i));});
 }
 
-// ── MODAL ──
 function openModal(it){
   currentUrl="https://uranus-agency.ir/demo?key="+it.key;
   document.getElementById("mBrand").textContent=it.brand;
@@ -487,7 +459,11 @@ function openModal(it){
   frame.style.display="none";
   frame.src=currentUrl;
   document.getElementById("modalBg").classList.add("open");
+  // مخفی کردن layout اصلی، فقط ستاره‌ها و nebula میمونن
+  document.querySelector(".desktop-layout").style.visibility="hidden";
+  document.querySelector(".mobile-layout").style.visibility="hidden";
   document.body.style.overflow="hidden";
+  document.body.classList.add("modal-open");
 }
 function iframeLoaded(){
   document.getElementById("phoneLoading").style.display="none";
@@ -497,14 +473,13 @@ function bgClick(e){if(e.target===document.getElementById("modalBg"))closeModal(
 function closeModal(){
   document.getElementById("modalBg").classList.remove("open");
   document.getElementById("previewFrame").src="";
+  document.querySelector(".desktop-layout").style.visibility="";
+  document.querySelector(".mobile-layout").style.visibility="";
   document.body.style.overflow="";
 }
 function openInNew(){window.open(currentUrl,"_blank");}
 
-// ── INIT ──
-buildDesktopFilters();
-buildMobileFilters();
-renderAll();
+buildDesktopFilters();buildMobileFilters();renderAll();
 </script>
 </body>
 </html>
